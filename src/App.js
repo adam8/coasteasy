@@ -1,21 +1,56 @@
+/*jshint trailing:false */
+
 import React, { Component } from 'react';
-import logo from './logo.svg';
+/*jshint newcap:false */
+import horizon from '@horizon/client';
+/*jshint newcap:true */
+import Logo from './Logo';
 import './App.css';
 
+const ho = horizon({host: 'localhost:8181'});
+ho.onReady(function() {
+  document.querySelector('h1').innerHTML = 'Horizon is working!';
+});
+ho.connect();
+
+// Create a "messages" collection
+const chat = ho("messages");
+
 class App extends Component {
+  componentWillMount(): void {
+    chat.fetch().subscribe(
+      (items) => {
+        items.forEach((item) => {
+          // console.log(item);
+          this.setState(item);
+        })
+      },
+      (err) => {
+        console.log(err);
+      });
+  }
+
+  componentDidUpdate(): void {
+    // console.log('componentDidUpdate');
+  }
+
   render() {
+    const blurb = (this.state && this.state.text) || 'nope';
+
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <div className="coasteasy">
+        <div className="header">
+          <div><Logo /></div>
+          <h1>Hello World</h1>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+
+        <p>
+          Yessir... {blurb}
         </p>
       </div>
     );
   }
+
 }
 
 export default App;
