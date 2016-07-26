@@ -7,7 +7,7 @@ import horizon from '@horizon/client';
 import Logo from './Logo';
 import './App.css';
 
-const ho = horizon({host: 'localhost:8181'});
+const ho = horizon({host: '127.0.0.1:8181'});
 ho.onReady(function() {
   document.querySelector('h1').innerHTML = 'Horizon is working!';
 });

@@ -3,3 +3,4 @@ rethinkdb_data
 dist/index.html
 .hz
 .DS_Store
+build
